@@ -17,7 +17,7 @@ import api from "../utils/api.js";
 import auth from "../utils/auth";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isDeletePlacePopupOpen, setDeletePlacePopupOpen] = useState(false);
@@ -55,11 +55,25 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, []);
+
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    };
+    document.addEventListener("keydown", closeByEscape);
+    return () => document.removeEventListener("keydown", closeByEscape);
+  }, []);
+
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
   const handleEditProfileClick = () => {
-    setEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   };
   const handleAddPlaceClick = () => {
     setAddPlacePopupOpen(!isAddPlacePopupOpen);
@@ -75,7 +89,7 @@ function App() {
 
   const closeAllPopups = () => {
     setEditAvatarPopupOpen(false);
-    setEditProfilePopupOpen(false);
+    setIsEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setDeletePlacePopupOpen(false);
     setSelectedCard({});
@@ -165,7 +179,6 @@ function App() {
     auth
       .register(email, password)
       .then((data) => {
-        setIsInfoToolTipOpen(true);
         setInfoToolTipMessage("Success! You have now been registered.");
         setInfoToolTipSuccess(true);
         history.push("/signin");
@@ -174,10 +187,10 @@ function App() {
         if (err === 400) {
           console.log("400 - one of the fields was filled in incorrectly");
         }
-        setIsInfoToolTipOpen(true);
         setInfoToolTipMessage("Oops, something went wrong! Please try again.");
         setInfoToolTipSuccess(false);
-      });
+      })
+      .finally(setIsInfoToolTipOpen(true));
   };
 
   const handleLogin = (email, password) => {
@@ -227,8 +240,6 @@ function App() {
       history.push("/signin");
     }
   };
-
-  checkIfLoggedIn();
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

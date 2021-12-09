@@ -1,32 +1,28 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm.js";
-import validator from "../utils/FormValidator.js";
+import useFormAndValidation from "../utils/FormValidator.js";
 
 const EditAvatarPopup = ({ isSending, isOpen, onClose, onUpdateAvatar }) => {
-  const avatar = useRef(null);
-  const [avatarValidation, setAvatarValidation] = useState({});
-  const [submitButtonActive, setSubmitButtonActive] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
-    avatar.current.value = "";
-    setAvatarValidation({ hasError: false, showError: false, errorMessage: "" });
-    setSubmitButtonActive(false);
-  }, [isOpen]);
+    setAvatar("");
+    resetForm();
+  }, [isOpen, resetForm]);
 
-  const handleChange = (e) => {
-    setAvatarValidation(() => {
-      setSubmitButtonActive(avatarValidation.hasError ? false : true);
-      return validator(avatarValidation, e.target);
-    });
+  const handleLinkChange = (e) => {
+    setAvatar(e.target.value);
+    handleChange(e);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onUpdateAvatar({
-      avatar: avatar.current.value,
+      avatar: avatar,
     });
-    avatar.current.value = "";
+    setAvatar("");
   };
 
   return (
@@ -37,7 +33,7 @@ const EditAvatarPopup = ({ isSending, isOpen, onClose, onUpdateAvatar }) => {
       onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
-      submitButtonState={submitButtonActive ? "" : "popup__submit_inactive"}
+      submitButtonState={isValid ? "" : "popup__submit_inactive"}
     >
       <input
         id="url-input"
@@ -45,15 +41,11 @@ const EditAvatarPopup = ({ isSending, isOpen, onClose, onUpdateAvatar }) => {
         name="link"
         type={isOpen ? "url" : "reset"}
         placeholder="Image link"
-        className={`popup__input ${avatarValidation.showError ? "popup__input_type_error" : ""}`}
-        ref={avatar}
-        onChange={handleChange}
+        className={`popup__input ${errors.link ? "popup__input_type_error" : ""}`}
+        onChange={handleLinkChange}
       />
-      <span
-        id="name-input-error"
-        className={`popup__input-error ${avatarValidation.showError ? "popup__input-error_active" : ""}`}
-      >
-        {avatarValidation.errorMessage}
+      <span id="name-input-error" className={`popup__input-error  ${errors.link ? "popup__input-error_active" : ""}`}>
+        {errors.link}
       </span>
     </PopupWithForm>
   );

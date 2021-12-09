@@ -35,6 +35,7 @@ const Login = ({ onLogin }) => {
                 type="email"
                 placeholder="Email"
                 className="authenticate__input"
+                value={email}
                 onChange={handleEmailChange}
               ></input>
 
@@ -44,6 +45,7 @@ const Login = ({ onLogin }) => {
                 type="password"
                 placeholder="password"
                 className="authenticate__input"
+                value={password}
                 onChange={handlePasswordChange}
               ></input>
             </div>

@@ -17,51 +17,49 @@ const Header = ({ onLogout }) => {
   };
 
   return (
-    <>
-      <header className="header">
-        <div className={`header__hamburger-menu ${isHamburgerMenuOpen ? "header__hamburger-menu_open" : ""}`}>
-          <ul className="header__links header__links_type_hamburger">
-            <li className="header__link header__link_type_email">{localStorage.getItem("email")}</li>
-            <li className="header__link">
+    <header className="header">
+      <div className={`header__hamburger-menu ${isHamburgerMenuOpen ? "header__hamburger-menu_open" : ""}`}>
+        <ul className="header__links header__links_type_hamburger">
+          <li className="header__link header__link_type_email">{localStorage.getItem("email")}</li>
+          <li className="header__link">
+            <p className="header__link" to="/signin" onClick={onLogout}>
+              Log out
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div className="header__container">
+        <img src={logo} alt="Around The U.S." className="header__logo" />
+        <ul className={`header__links ${isMain ? "header__links_type_main" : ""}`}>
+          <li className="header__link header__link_type_email">{isMain ? localStorage.getItem("email") : ""}</li>
+          <li className="header__link">
+            {isSignup ? (
+              <Link className="header__link" to="/signin">
+                Sign in
+              </Link>
+            ) : isSignin ? (
+              <Link className="header__link" to="/signup">
+                Sign up
+              </Link>
+            ) : (
               <p className="header__link" to="/signin" onClick={onLogout}>
                 Log out
               </p>
-            </li>
-          </ul>
-        </div>
-        <div className="header__container">
-          <img src={logo} alt="Around The U.S." className="header__logo" />
-          <ul className={`header__links ${isMain ? "header__links_type_main" : ""}`}>
-            <li className="header__link header__link_type_email">{isMain ? localStorage.getItem("email") : ""}</li>
-            <li className="header__link">
-              {isSignup ? (
-                <Link className="header__link" to="/signin">
-                  Sign in
-                </Link>
-              ) : isSignin ? (
-                <Link className="header__link" to="/signup">
-                  Sign up
-                </Link>
-              ) : (
-                <p className="header__link" to="/signin" onClick={onLogout}>
-                  Log out
-                </p>
-              )}
-            </li>
-          </ul>
-          {isMain ? (
-            <img
-              src={isHamburgerMenuOpen ? closeIcon : hamburgerIcon}
-              alt="hamburger-menu"
-              className="header__hamburger"
-              onClick={handleHamburgerClick}
-            ></img>
-          ) : (
-            ""
-          )}
-        </div>
-      </header>
-    </>
+            )}
+          </li>
+        </ul>
+        {isMain ? (
+          <img
+            src={isHamburgerMenuOpen ? closeIcon : hamburgerIcon}
+            alt="hamburger-menu"
+            className="header__hamburger"
+            onClick={handleHamburgerClick}
+          ></img>
+        ) : (
+          ""
+        )}
+      </div>
+    </header>
   );
 };
 

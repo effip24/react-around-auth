@@ -25,7 +25,7 @@ const Register = ({ onRegister }) => {
   return (
     <section className="authenticate">
       <div className="authenticate__from-container">
-        <form name="login" action="#" className="authenticate__form" onSubmit={handleSubmit}>
+        <form name="register" action="#" className="authenticate__form" onSubmit={handleSubmit}>
           <div className="authenticate__title-container">
             <h3 className="authenticate__title">Sign up</h3>
             <div className="authenticate__input-container">
@@ -35,6 +35,7 @@ const Register = ({ onRegister }) => {
                 type="email"
                 placeholder="Email"
                 className="authenticate__input"
+                value={email}
                 onChange={handleEmailChange}
               ></input>
               <input
@@ -43,6 +44,7 @@ const Register = ({ onRegister }) => {
                 type="password"
                 placeholder="password"
                 className="authenticate__input"
+                value={password}
                 onChange={handlePasswordChange}
               ></input>
             </div>

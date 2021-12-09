@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm.js";
-import validator from "../utils/FormValidator.js";
+import useFormAndValidation from "../utils/FormValidator.js";
 
 const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
   const [cardName, setCardName] = useState("");
   const [cardLink, setCardLink] = useState("");
-  const [nameValidation, setNameValidation] = useState({});
-  const [linkValidation, setLinkValidation] = useState({});
-  const [submitButtonActive, setSubmitButtonActive] = useState(false);
+  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
     setCardName("");
     setCardLink("");
-    setNameValidation({ hasError: true, showError: false, errorMessage: "" });
-    setLinkValidation({ hasError: true, showError: false, errorMessage: "" });
-    setSubmitButtonActive(false);
   }, [isOpen]);
 
   useEffect(() => {
-    setSubmitButtonActive(nameValidation.hasError || linkValidation.hasError ? false : true);
-  }, [nameValidation.hasError, linkValidation.hasError]);
+    resetForm();
+  }, [isOpen, resetForm]);
 
   const handleTitleChange = (e) => {
     setCardName(e.target.value);
-    setNameValidation(validator(nameValidation, e.target));
+    handleChange(e);
   };
 
   const handleLinkChange = (e) => {
     setCardLink(e.target.value);
-    setLinkValidation(validator(linkValidation, e.target));
+    handleChange(e);
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +43,7 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
       onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
-      submitButtonState={submitButtonActive ? "" : "popup__submit_inactive"}
+      submitButtonState={isValid ? "" : "popup__submit_inactive"}
     >
       <input
         id="title-input"
@@ -59,14 +54,11 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         value={cardName}
         type={isOpen ? "text" : "reset"}
         placeholder="Title"
-        className={`popup__input ${nameValidation.showError ? "popup__input_type_error" : ""}`}
+        className={`popup__input  ? "popup__input_type_error" : ""}`}
         onChange={handleTitleChange}
       />
-      <span
-        id="title-input-error"
-        className={`popup__input-error ${nameValidation.showError ? "popup__input-error_active" : ""}`}
-      >
-        {nameValidation.errorMessage}
+      <span id="title-input-error" className={`popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>
+        {errors.name}
       </span>
 
       <input
@@ -76,14 +68,11 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         value={cardLink}
         type={isOpen ? "url" : "reset"}
         placeholder="Image link"
-        className={`popup__input ${linkValidation.showError ? "popup__input_type_error" : ""}`}
+        className={`popup__input  ? "popup__input_type_error" : ""}`}
         onChange={handleLinkChange}
       />
-      <span
-        id="title-input-error"
-        className={`popup__input-error ${linkValidation.showError ? "popup__input-error_active" : ""}`}
-      >
-        {linkValidation.errorMessage}
+      <span id="title-input-error" className={`popup__input-error ${errors.link ? "popup__input-error_active" : ""}`}>
+        {errors.link}
       </span>
     </PopupWithForm>
   );

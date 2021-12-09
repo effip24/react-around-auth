@@ -1,36 +1,28 @@
 import React, { useEffect, useState, useContext } from "react";
 import PopupWithForm from "./PopupWithForm.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import validator from "../utils/FormValidator.js";
+import useFormAndValidation from "../utils/FormValidator.js";
 
 const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [nameValidation, setNameValidation] = useState({});
-  const [descriptionValidation, setDescriptionValidation] = useState({});
-  const [submitButtonActive, setSubmitButtonActive] = useState(false);
+  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
     setName(currentUser.name ? currentUser.name : "");
     setDescription(currentUser.about ? currentUser.about : "");
-    setNameValidation({ hasError: false, showError: false, errorMessage: "" });
-    setDescriptionValidation({ hasError: false, showError: false, errorMessage: "" });
-    setSubmitButtonActive(false);
-  }, [isOpen, currentUser.name, currentUser.about]);
-
-  useEffect(() => {
-    setSubmitButtonActive(nameValidation.hasError || descriptionValidation.hasError ? false : true);
-  }, [nameValidation.hasError, descriptionValidation.hasError, name, description]);
+    resetForm();
+  }, [isOpen, currentUser.name, currentUser.about, resetForm]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    setNameValidation(validator(nameValidation, e.target));
+    handleChange(e);
   };
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
-    setDescriptionValidation(validator(descriptionValidation, e.target));
+    handleChange(e);
   };
 
   const handleSubmit = (e) => {
@@ -50,7 +42,7 @@ const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
       submit={isSending ? "Saving..." : "Save"}
       onClose={onClose}
       isOpen={isOpen}
-      submitButtonState={submitButtonActive ? "" : "popup__submit_inactive"}
+      submitButtonState={isValid ? "" : "popup__submit_inactive"}
     >
       <input
         id="name-input"
@@ -61,14 +53,11 @@ const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
         name="name"
         type="text"
         placeholder="name"
-        className={`popup__input ${nameValidation.showError ? "popup__input_type_error" : ""}`}
+        className={`popup__input ${errors.name ? "popup__input_type_error" : ""}`}
         onChange={handleNameChange}
       />
-      <span
-        id="name-input-error"
-        className={`popup__input-error ${nameValidation.showError ? "popup__input-error_active" : ""}`}
-      >
-        {nameValidation.errorMessage}
+      <span id="name-input-error" className={`popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>
+        {errors.name}
       </span>
       <input
         id="occupation-input"
@@ -79,14 +68,14 @@ const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
         name="occupation"
         type="text"
         placeholder="About me"
-        className={`popup__input ${descriptionValidation.showError ? "popup__input_type_error" : ""}`}
+        className={`popup__input ${errors.occupation ? "popup__input_type_error" : ""}`}
         onChange={handleDescriptionChange}
       />
       <span
         id="title-input-error"
-        className={`popup__input-error ${descriptionValidation.showError ? "popup__input-error_active" : ""}`}
+        className={`popup__input-error ${errors.occupation ? "popup__input-error_active" : ""}`}
       >
-        {descriptionValidation.errorMessage}
+        {errors.occupation}
       </span>
     </PopupWithForm>
   );
