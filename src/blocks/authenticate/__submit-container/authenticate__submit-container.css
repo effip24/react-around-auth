@@ -1,0 +1,6 @@
+.authenticate__submit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+  margin-top: 215px;
+}

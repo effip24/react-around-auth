@@ -1,0 +1,12 @@
+.popup__form_type_delete {
+  width: 100%;
+  padding: 34px 36px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .popup__form_type_delete {
+    max-width: 238px;
+    padding: 25px 22px;
+  }
+}

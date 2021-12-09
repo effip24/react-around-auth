@@ -1,0 +1,30 @@
+.popup__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  border: 0;
+  transform: rotate(-45deg);
+  background-image: url(../../../images/plus-icon.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity .2s linear;
+}
+.popup__close:hover {
+  opacity: .6;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .popup__close {
+    width: 26px;
+    height: 26px;
+    top: -30px;
+    right: 0;
+  }
+}

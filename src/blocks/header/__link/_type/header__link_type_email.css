@@ -1,0 +1,7 @@
+.header__link_type_email {
+  transition: none;
+}
+.header__link_type_email:hover {
+  opacity: 1;
+  cursor: default;
+}

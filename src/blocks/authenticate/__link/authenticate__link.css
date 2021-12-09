@@ -1,0 +1,22 @@
+.authenticate__link {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  transition: opacity 0.2s linear;
+  text-decoration: none;
+}
+.authenticate__link:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+@media screen and (max-width: 400px) {
+  .authenticate__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

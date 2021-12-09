@@ -1,0 +1,15 @@
+.profile__avatar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 30px;
+  width: 120px;
+  height: 120px;
+}
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .profile__avatar-wrap {
+    margin: 0;
+  }
+}

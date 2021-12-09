@@ -1,0 +1,15 @@
+.header__hamburger {
+  display: none;
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.2s linear;
+}
+.header__hamburger:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+@media screen and (max-width: 770px) {
+  .header__hamburger {
+    display: inline-block;
+  }
+}

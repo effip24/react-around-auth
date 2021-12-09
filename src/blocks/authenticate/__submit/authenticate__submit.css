@@ -1,0 +1,22 @@
+.authenticate__submit {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 50px;
+  /* identical to box height */
+  text-align: center;
+  color: #000000;
+  transition: opacity 0.2s linear;
+}
+.authenticate__submit:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+@media screen and (max-width: 400px) {
+  .authenticate__submit {
+    font-size: 16px;
+  }
+}

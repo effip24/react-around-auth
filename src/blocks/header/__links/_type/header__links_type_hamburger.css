@@ -1,0 +1,5 @@
+.header__links_type_hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 18px 0;
+}

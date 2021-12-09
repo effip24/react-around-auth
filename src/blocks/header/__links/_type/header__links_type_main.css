@@ -1,0 +1,5 @@
+@media screen and (max-width: 770px) {
+  .header__links_type_main {
+    display: none;
+  }
+}

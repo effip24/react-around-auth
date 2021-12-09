@@ -1,0 +1,10 @@
+.place {
+  display: flex;
+  position: relative;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px 0;
+  background: #FFFFFF;
+  border-radius: 10px;
+}

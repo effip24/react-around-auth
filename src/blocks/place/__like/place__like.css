@@ -1,0 +1,16 @@
+.place__like {
+  width: 21px;
+  height: 19px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  align-self: baseline;
+  border: 0;
+  transition: opacity .2s linear;
+}
+.place__like:hover {
+  opacity: .5;
+}

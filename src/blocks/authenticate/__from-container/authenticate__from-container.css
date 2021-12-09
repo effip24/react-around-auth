@@ -1,0 +1,15 @@
+.authenticate__from-container {
+  width: 100%;
+  max-width: 358px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 540px) {
+  .authenticate__from-container {
+    max-width: 320px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .authenticate__from-container {
+    max-width: 260px;
+  }
+}

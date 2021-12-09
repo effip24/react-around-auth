@@ -1,0 +1,13 @@
+.popup__form {
+  width: 100%;
+  max-width: 358px;
+  padding: 34px 36px 36px 36px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .popup__form {
+    max-width: 238px;
+    padding: 25px 22px;
+  }
+}

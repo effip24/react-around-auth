@@ -1,0 +1,14 @@
+.place__description {
+  display: flex;
+  gap: 0 29px;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 15px 22px 21px;
+}
+
+/* Media Queries */
+@media screen and (max-width:320px) {
+  .place__description {
+    margin-bottom: 31px;
+  }
+}

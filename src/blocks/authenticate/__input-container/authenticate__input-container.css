@@ -1,0 +1,6 @@
+.authenticate__input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px 0;
+  width: 100%;
+}
