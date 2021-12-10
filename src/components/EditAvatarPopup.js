@@ -1,28 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm.js";
 import useFormAndValidation from "../utils/FormValidator.js";
 
 const EditAvatarPopup = ({ isSending, isOpen, onClose, onUpdateAvatar }) => {
-  const [avatar, setAvatar] = useState("");
   const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
-    setAvatar("");
     resetForm();
-  }, [isOpen, resetForm]);
-
-  const handleLinkChange = (e) => {
-    setAvatar(e.target.value);
-    handleChange(e);
-  };
+    setValues({ link: "" });
+  }, [isOpen, resetForm, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onUpdateAvatar({
-      avatar: avatar,
+      avatar: values.link,
     });
-    setAvatar("");
   };
 
   return (
@@ -42,7 +35,8 @@ const EditAvatarPopup = ({ isSending, isOpen, onClose, onUpdateAvatar }) => {
         type={isOpen ? "url" : "reset"}
         placeholder="Image link"
         className={`popup__input ${errors.link ? "popup__input_type_error" : ""}`}
-        onChange={handleLinkChange}
+        value={values.link || ""}
+        onChange={handleChange}
       />
       <span id="name-input-error" className={`popup__input-error  ${errors.link ? "popup__input-error_active" : ""}`}>
         {errors.link}

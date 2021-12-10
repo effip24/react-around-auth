@@ -190,7 +190,9 @@ function App() {
         setInfoToolTipMessage("Oops, something went wrong! Please try again.");
         setInfoToolTipSuccess(false);
       })
-      .finally(setIsInfoToolTipOpen(true));
+      .finally(() => {
+        setIsInfoToolTipOpen(true);
+      });
   };
 
   const handleLogin = (email, password) => {

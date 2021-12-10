@@ -3,36 +3,17 @@ import PopupWithForm from "./PopupWithForm.js";
 import useFormAndValidation from "../utils/FormValidator.js";
 
 const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
-  const [cardName, setCardName] = useState("");
-  const [cardLink, setCardLink] = useState("");
   const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
-    setCardName("");
-    setCardLink("");
-  }, [isOpen]);
-
-  useEffect(() => {
     resetForm();
-  }, [isOpen, resetForm]);
-
-  const handleTitleChange = (e) => {
-    setCardName(e.target.value);
-    handleChange(e);
-  };
-
-  const handleLinkChange = (e) => {
-    setCardLink(e.target.value);
-    handleChange(e);
-  };
+    setValues({ name: "", link: "" });
+  }, [isOpen, resetForm, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onAddPlaceSubmit({
-      name: cardName,
-      link: cardLink,
-    });
+    onAddPlaceSubmit(values);
   };
 
   return (
@@ -51,11 +32,11 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         minLength="1"
         maxLength="30"
         name="name"
-        value={cardName}
         type={isOpen ? "text" : "reset"}
         placeholder="Title"
         className={`popup__input  ? "popup__input_type_error" : ""}`}
-        onChange={handleTitleChange}
+        value={values.name || ""}
+        onChange={handleChange}
       />
       <span id="title-input-error" className={`popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>
         {errors.name}
@@ -65,11 +46,11 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         id="link-input"
         required
         name="link"
-        value={cardLink}
         type={isOpen ? "url" : "reset"}
         placeholder="Image link"
         className={`popup__input  ? "popup__input_type_error" : ""}`}
-        onChange={handleLinkChange}
+        value={values.link || ""}
+        onChange={handleChange}
       />
       <span id="title-input-error" className={`popup__input-error ${errors.link ? "popup__input-error_active" : ""}`}>
         {errors.link}

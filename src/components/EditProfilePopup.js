@@ -5,33 +5,17 @@ import useFormAndValidation from "../utils/FormValidator.js";
 
 const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
   useEffect(() => {
-    setName(currentUser.name ? currentUser.name : "");
-    setDescription(currentUser.about ? currentUser.about : "");
     resetForm();
-  }, [isOpen, currentUser.name, currentUser.about, resetForm]);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    handleChange(e);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-    handleChange(e);
-  };
+    setValues({ name: currentUser.name, about: currentUser.about });
+  }, [isOpen, resetForm, setValues, currentUser.name, currentUser.about]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onUpdateUser({
-      name: name,
-      about: description,
-    });
+    onUpdateUser(values);
   };
 
   return (
@@ -49,12 +33,12 @@ const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
         required
         minLength="2"
         maxLength="40"
-        value={name}
+        value={values.name || ""}
         name="name"
         type="text"
         placeholder="name"
         className={`popup__input ${errors.name ? "popup__input_type_error" : ""}`}
-        onChange={handleNameChange}
+        onChange={handleChange}
       />
       <span id="name-input-error" className={`popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>
         {errors.name}
@@ -64,12 +48,12 @@ const EditProfilePopup = ({ isSending, isOpen, onClose, onUpdateUser }) => {
         required
         minLength="2"
         maxLength="200"
-        value={description}
-        name="occupation"
+        value={values.about || ""}
+        name="about"
         type="text"
         placeholder="About me"
         className={`popup__input ${errors.occupation ? "popup__input_type_error" : ""}`}
-        onChange={handleDescriptionChange}
+        onChange={handleChange}
       />
       <span
         id="title-input-error"
