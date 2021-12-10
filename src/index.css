@@ -77,8 +77,12 @@
 @import url(./blocks/authenticate/__title/authenticate__title.css);
 @import url(./blocks/authenticate/__input-container/authenticate__input-container.css);
 @import url(./blocks/authenticate/__input/authenticate__input.css);
+@import url(./blocks/authenticate/__input/_type/popup__input_type_error.css);
+@import url(./blocks/authenticate/__input-error/authenticate__input-error.css);
+@import url(./blocks/authenticate/__input-error/_active/authenticate__input-error_active.css);
 @import url(./blocks/authenticate/__submit-container/authenticate__submit-container.css);
 @import url(./blocks/authenticate/__submit/authenticate__submit.css);
+@import url(./blocks/authenticate/__submit/_inactive/authenticate__submit_inactive.css);
 @import url(./blocks/authenticate/__link/authenticate__link.css);
 
 /* imports for info */

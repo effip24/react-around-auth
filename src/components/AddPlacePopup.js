@@ -34,7 +34,7 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         name="name"
         type={isOpen ? "text" : "reset"}
         placeholder="Title"
-        className={`popup__input  ? "popup__input_type_error" : ""}`}
+        className={`popup__input  ${errors.name ? "popup__input_type_error" : ""}`}
         value={values.name || ""}
         onChange={handleChange}
       />
@@ -48,7 +48,7 @@ const AddPlacePopup = ({ isSending, isOpen, onClose, onAddPlaceSubmit }) => {
         name="link"
         type={isOpen ? "url" : "reset"}
         placeholder="Image link"
-        className={`popup__input  ? "popup__input_type_error" : ""}`}
+        className={`popup__input  ${errors.link ? "popup__input_type_error" : ""}`}
         value={values.link || ""}
         onChange={handleChange}
       />

@@ -17,14 +17,14 @@ class Api {
 
   /** this function returns the name and the about information from the server. */
   getUserInfo() {
-    return fetch(this._baseUrl + "/users/me", { headers: this._headers }).then((res) => {
+    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then((res) => {
       return this._checkResponse(res);
     });
   }
 
   /** this function returns the cards from the server. */
   getInitialCards() {
-    return fetch(this._baseUrl + "/cards", { headers: this._headers }).then((res) => {
+    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then((res) => {
       return this._checkResponse(res);
     });
   }
@@ -34,7 +34,7 @@ class Api {
    * @param about - the new about to be saved.
    */
   saveUserInfo(name, about) {
-    return fetch(this._baseUrl + "/users/me", {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name: name, about: about }),
@@ -48,7 +48,7 @@ class Api {
    * @param link - link to the card's image.
    */
   saveCard(card) {
-    return fetch(this._baseUrl + "/cards", {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(card),
@@ -61,7 +61,7 @@ class Api {
    * @param  cardId - the id of the deleted card.
    */
   deleteCard(cardId) {
-    return fetch(this._baseUrl + "/cards/" + cardId, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -73,7 +73,7 @@ class Api {
    * @param  cardId - the id of the liked card.
    */
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(this._baseUrl + "/cards/likes/" + cardId, {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: `${isLiked ? "PUT" : "DELETE"}`,
       headers: this._headers,
     }).then((res) => {
@@ -85,7 +85,7 @@ class Api {
    * @param  link - link to the new avatar's image.
    */
   setUserAvatar(avatar) {
-    return fetch(this._baseUrl + "/users/me/avatar", {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(avatar),

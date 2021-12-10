@@ -1,23 +1,19 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
+import useFormAndValidation from "../utils/FormValidator.js";
 
 const Register = ({ onRegister }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email && password) {
-      onRegister(email, password);
+    if (values.email && values.password) {
+      onRegister(values.email, values.password);
     }
     return;
   };
@@ -34,23 +30,34 @@ const Register = ({ onRegister }) => {
                 name="email"
                 type="email"
                 placeholder="Email"
-                className="authenticate__input"
-                value={email}
-                onChange={handleEmailChange}
+                className={`authenticate__input ${errors.email ? "authenticate__input_type_error" : ""}`}
+                value={values.email || ""}
+                onChange={handleChange}
               ></input>
+              <span className={`authenticate__input-error ${errors.email ? "authenticate__input-error_active" : ""}`}>
+                {errors.email}
+              </span>
+
               <input
                 required
+                minLength="6"
+                maxLength="30"
                 name="password"
                 type="password"
                 placeholder="password"
-                className="authenticate__input"
-                value={password}
-                onChange={handlePasswordChange}
+                className={`authenticate__input ${errors.password ? "authenticate__input_type_error" : ""}`}
+                value={values.password || ""}
+                onChange={handleChange}
               ></input>
+              <span
+                className={`authenticate__input-error ${errors.password ? "authenticate__input-error_active" : ""}`}
+              >
+                {errors.password}
+              </span>
             </div>
           </div>
           <div className="authenticate__submit-container">
-            <button className="authenticate__submit" type="submit">
+            <button className={`authenticate__submit ${!isValid ? "authenticate__submit_inactive" : ""}`} type="submit">
               Sign up
             </button>
             <Link className="authenticate__link" to="/signin">
